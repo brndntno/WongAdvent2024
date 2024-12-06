@@ -21,9 +21,16 @@ public class Day4 {
             System.out.println();
         }
 
+        int numXMAS = 0;
+        for (int r = 0; r < grid.length; r++) {
+            for (int c = 0; c < grid[0].length; c++) {
+                numXMAS += numXMAS(grid, r, c);
+            }
+        }
+        System.out.println(numXMAS);
     }
 
-    public boolean east(String[][] grid, int r, int c) {
+    public static boolean east(String[][] grid, int r, int c) {
         if (grid[r][c].equals("X")) {
             if (grid[r][c+1].equals("M")) {
                 if (grid[r][c+2].equals("A")) {
@@ -36,7 +43,7 @@ public class Day4 {
         return false;
     }
 
-    public boolean northEast(String[][] grid, int r, int c) {
+    public static boolean northEast(String[][] grid, int r, int c) {
         if (grid[r][c].equals("X")) {
             if (grid[r-1][c+1].equals("M")) {
                 if (grid[r-2][c+2].equals("A")) {
@@ -49,7 +56,7 @@ public class Day4 {
         return false;
     }
 
-    public boolean west(String[][] grid, int r, int c) {
+    public static boolean west(String[][] grid, int r, int c) {
         if (grid[r][c].equals("X")) {
             if (grid[r][c-1].equals("M")) {
                 if (grid[r][c-2].equals("A")) {
@@ -62,7 +69,20 @@ public class Day4 {
         return false;
     }
 
-    public boolean north(String[][] grid, int r, int c) {
+    public static boolean northWest(String[][] grid, int r, int c) {
+        if (grid[r][c].equals("X")) {
+            if (grid[r-1][c-1].equals("M")) {
+                if (grid[r-2][c-2].equals("A")) {
+                    if (grid[r-3][c-3].equals("S")) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public static boolean north(String[][] grid, int r, int c) {
         if (grid[r][c].equals("X")) {
             if (grid[r-1][c].equals("M")) {
                 if (grid[r-2][c].equals("A")) {
@@ -75,7 +95,20 @@ public class Day4 {
         return false;
     }
 
-    public boolean south(String[][] grid, int r, int c) {
+    public static boolean southWest(String[][] grid, int r, int c) {
+        if (grid[r][c].equals("X")) {
+            if (grid[r+1][c-1].equals("M")) {
+                if (grid[r+2][c-2].equals("A")) {
+                    if (grid[r+3][c-3].equals("S")) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public static boolean south(String[][] grid, int r, int c) {
         if (grid[r][c].equals("X")) {
             if (grid[r+1][c].equals("M")) {
                 if (grid[r+2][c].equals("A")) {
@@ -86,6 +119,74 @@ public class Day4 {
             }
         }
         return false;
+    }
+
+    public static boolean southEast(String[][] grid, int r, int c) {
+        if (grid[r][c].equals("X")) {
+            if (grid[r+1][c+1].equals("M")) {
+                if (grid[r+2][c+2].equals("A")) {
+                    if (grid[r+3][c+3].equals("S")) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public static boolean notOutOfBounds(String[][] grid, int r, int c) {
+        if (r < 0 || r >= grid.length) {
+            return false;
+        }
+        if (c < 0 || c >= grid[0].length) {
+            return false;
+        }
+        return true;
+    }
+
+    public static int numXMAS(String[][] grid, int r, int c) {
+        int num = 0;
+        if (notOutOfBounds(grid, r, c+3)) {
+            if (east(grid, r, c)) {
+                num++;
+            }
+        }
+        if (notOutOfBounds(grid, r, c-3)) {
+            if (west(grid, r, c)) {
+                num++;
+            }
+        }
+        if (notOutOfBounds(grid, r-3, c)) {
+            if (north(grid, r, c)) {
+                num++;
+            }
+        }
+        if (notOutOfBounds(grid, r+3, c)) {
+            if (south(grid, r, c)) {
+                num++;
+            }
+        }
+        if (notOutOfBounds(grid, r-3, c+3)) {
+            if (northEast(grid, r, c)) {
+                num++;
+            }
+        }
+        if (notOutOfBounds(grid, r-3, c-3)) {
+            if (northWest(grid, r, c)) {
+                num++;
+            }
+        }
+        if (notOutOfBounds(grid, r+3, c+3)) {
+            if (southEast(grid, r, c)) {
+                num++;
+            }
+        }
+        if (notOutOfBounds(grid, r+3, c-3)) {
+            if (southWest(grid, r, c)) {
+                num++;
+            }
+        }
+        return num;
     }
 
     public static ArrayList<String> getFileData(String fileName) {
