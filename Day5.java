@@ -12,25 +12,29 @@ public class Day5 {
         ArrayList<String> matches = new ArrayList<>();
 
         for (int i = 0; i < fileData2.size(); i++) {
-            int incorrect = 0;
+            int wrong = 0;
             for (int j = 0; j < fileData.size(); j++) {
-                String[] splitSample = fileData.get(j).split("|");
-                String num1 = splitSample[0] + splitSample[1];
-                String num2 = splitSample[2] + splitSample[3];
+                String[] splitSample = fileData.get(j).split("\\|");
+                String num1 = splitSample[0];
+                String num2 = splitSample[1];
                 if (fileData2.get(i).contains(num1) && fileData2.get(i).contains(num2)) {
                     if (fileData2.get(i).indexOf(num1) > fileData2.get(i).indexOf(num2)) {
-                        incorrect++;
+                        wrong++;
                     }
                 }
             }
-            if (incorrect == 0) {
+            if (wrong == 0) {
                 matches.add(fileData2.get(i));
             }
         }
 
+        int sum = 0;
         for (int i = 0; i < matches.size(); i++) {
-            System.out.println(matches.get(i));
+            String[] splitSample = matches.get(i).split(",");
+            sum += Integer.parseInt(splitSample[splitSample.length / 2]);
         }
+
+        System.out.println(sum);
 
     }
 
