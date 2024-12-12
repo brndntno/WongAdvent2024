@@ -9,9 +9,13 @@ public class Day6 {
         int rows = fileData.size();
         int columns = fileData.get(0).length();
         String[][] puzzle = new String[rows][columns];
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < columns; c++) {
+                puzzle[r][c] = fileData.get(r).substring(c, c + 1);
+            }
+        }
         int guardRow = 0;
         int guardColumn = 0;
-        String obstruct = "#";
         for (int r = 0; r < puzzle.length; r++) {
             for (int c = 0; c < puzzle[0].length; c++) {
                 if (puzzle[r][c].equals("^") || puzzle[r][c].equals("v")) {
@@ -24,21 +28,48 @@ public class Day6 {
                 }
             }
         }
-        int r = 0;
-        int c = 0;
+        int r = guardRow;
+        int c = guardColumn;
+        String temp = puzzle[r][c];
         while (rowInBounds(r,puzzle) && columnInBounds(c,puzzle)) {
-            if (puzzle[guardRow][guardColumn].equals("^")) {
-                
+            if (temp.equals("^")) {
+                if (puzzle[r][c].equals("#")) {
+                    temp = changeDirection("^");
+                } else {
+                    puzzle[r][c] = "X";
+                    r--;
+                }
             }
-            if (puzzle[guardRow][guardColumn].equals("v")) {
-
+            if (temp.equals("v")) {
+                if (puzzle[r][c].equals("#")) {
+                    temp = changeDirection("v");
+                } else {
+                    puzzle[r][c] = "X";
+                    r++;
+                }
             }
-            if (puzzle[guardRow][guardColumn].equals(">")) {
-
+            if (temp.equals(">")) {
+                if (puzzle[r][c].equals("#")) {
+                    temp = changeDirection(">");
+                } else {
+                    puzzle[r][c] = "X";
+                    c++;
+                }
             }
-            if (puzzle[guardRow][guardColumn].equals("<")) {
-
+            if (temp.equals("<")) {
+                if (puzzle[r][c].equals("#")) {
+                    temp = changeDirection("<");
+                } else {
+                    puzzle[r][c] = "X";
+                    c--;
+                }
             }
+        }
+        for (int i = 0; i < puzzle.length; i++) {
+            for (int j = 0; j < puzzle[0].length; j++) {
+                System.out.print(puzzle[i][j]);
+            }
+            System.out.println();
         }
     }
 
@@ -54,6 +85,19 @@ public class Day6 {
             return true;
         }
         return false;
+    }
+
+    public static String changeDirection(String direction) {
+        if (direction.equals("^")) {
+            return ">";
+        }
+        if (direction.equals("v")) {
+            return "<";
+        }
+        if (direction.equals(">")) {
+            return "v";
+        }
+        return "^";
     }
 
     public static ArrayList<String> getFileData(String fileName) {
