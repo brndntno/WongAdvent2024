@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Day1 {
@@ -21,16 +22,31 @@ public class Day1 {
             ints2.add(Integer.parseInt(second));
         }
 
-        Collections.sort(ints);
-        Collections.sort(ints2);
-
         int sum = 0;
-        for (int i = 0; i < fileData.size(); i++) {
-            int diff = Math.abs(ints.get(i) - ints2.get(i));
-            sum += diff;
+        for (int i = 0; i < ints.size(); i++) {
+            int occur = 0;
+            for (int j = 0; j < ints2.size(); j++) {
+                if (Objects.equals(ints.get(i), ints2.get(j))) {
+                    occur++;
+                }
+            }
+            sum += ints.get(i) * occur;
         }
 
         System.out.println(sum);
+
+        Collections.sort(ints);
+        Collections.sort(ints2);
+
+        int sum2 = 0;
+        for (int i = 0; i < fileData.size(); i++) {
+            int diff = Math.abs(ints.get(i) - ints2.get(i));
+            sum2 += diff;
+        }
+
+        System.out.println(sum2);
+
+
     }
 
     public static ArrayList<String> getFileData(String fileName) {
