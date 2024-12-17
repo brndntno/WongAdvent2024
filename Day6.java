@@ -31,45 +31,46 @@ public class Day6 {
         int r = guardRow;
         int c = guardColumn;
         String temp = puzzle[r][c];
+
         while (rowInBounds(r,puzzle) && columnInBounds(c,puzzle)) {
             puzzle[r][c] = "X";
             if (temp.equals("^")) {
                 if (rowInBounds(r - 1,puzzle)) {
-                    if (puzzle[r - 1][c].equals("#")) {
+                    if (puzzle[r-1][c].equals("#")) {
                         temp = changeDirection("^");
                     } else {
-                        puzzle[r][c] = "X";
                         r--;
+                        puzzle[r][c] = "X";
                     }
                 }
             }
             if (temp.equals("v")) {
                 if (rowInBounds(r + 1, puzzle)) {
-                    if (puzzle[r + 1][c].equals("#")) {
+                    if (puzzle[r+1][c].equals("#")) {
                         temp = changeDirection("v");
                     } else {
-                        puzzle[r][c] = "X";
                         r++;
+                        puzzle[r][c] = "X";
                     }
                 }
             }
             if (temp.equals(">")) {
                 if (columnInBounds(c + 1, puzzle)) {
-                    if (puzzle[r][c + 1].equals("#")) {
+                    if (puzzle[r][c+1].equals("#")) {
                         temp = changeDirection(">");
                     } else {
-                        puzzle[r][c] = "X";
                         c++;
+                        puzzle[r][c] = "X";
                     }
                 }
             }
             if (temp.equals("<")) {
                 if (columnInBounds(c - 1, puzzle)) {
-                    if (puzzle[r][c - 1].equals("#")) {
+                    if (puzzle[r][c-1].equals("#")) {
                         temp = changeDirection("<");
                     } else {
-                        puzzle[r][c] = "X";
                         c--;
+                        puzzle[r][c] = "X";
                     }
                 }
             }
